@@ -22,6 +22,18 @@ $("#close").on("click", function () {
   $(".black-bg").removeClass("show-ani");
 });
 
+//이벤트 버블링 막기
+//e.target - 유저가 실제로 누른거
+//e.currentTarget - 이벤트리스너 달린곳
+//e.preventDefault() - submit 막기
+//e.stopPropagation - 상위요소 버블링 막기
+
+document.querySelector('.black-bg').addEventListener('click',function(e){
+  if(e.target == document.querySelector('.black-bg')){
+    document.querySelector('.black-bg').classList.remove('show-ani');
+  }
+});
+
 
 //전송버튼 누르면 첫 input 값 공백씨 알림 띄움
 document.querySelector("form").addEventListener("submit", function (e) {
@@ -149,3 +161,25 @@ function set(){
   let percentage = (currY / totalY) * 100;
   document.querySelector('.progress').style.width = percentage + "%";
 }
+
+//캐러셀 스와이프 기능
+let start = 0;
+let 눌렀냐 = false;
+document.querySelectorAll('.slide-box')[0].addEventListener('mousedown', function(e){
+  // console.log(e.clientX); // x좌표 위치
+  start = e.clientX;
+  눌렀냐 = true;
+});
+
+document.querySelectorAll('.slide-box')[0].addEventListener('mousemove', function(e){
+  // console.log(e.clientX); // x좌표 위치
+  console.log(e.clientX-start);
+  if(눌렀냐 == true){
+    document.querySelector('.slide-container').style.transform=`translateX(${e.clientX-start}px)`
+  }
+  
+});
+
+document.querySelectorAll('.slide-box')[0].addEventListener('mouseup', function(e){
+  눌렀냐 = false;
+});
